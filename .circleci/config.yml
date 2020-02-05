@@ -27,10 +27,12 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-       - run:
-          name: Install Python Dependencies
+      - run:
+          name: install dependencies
           command: |
-            pip install --user --no-cache-dir -r requirements.txt
+            python3 -m venv venv
+            . venv/bin/activate
+            pip install -r requirements.txt
 
       - save_cache:
           paths:
@@ -42,7 +44,8 @@ jobs:
       # other common Python testing frameworks include pytest and nose
       # https://pytest.org
       # https://nose.readthedocs.io
-       name: Run Tests
+      - run:
+          name: Run Tests
           command: ~/.local/bin/pytest
 
       - store_artifacts:
